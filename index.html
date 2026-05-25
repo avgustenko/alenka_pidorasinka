@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>Дневник практики · штукатур-маляр 2 разряда · 16.03–26.04.2026</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f2f0eb;
+      font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      color: #2e2b26;
+    }
+
+    .diary-container {
+      max-width: 950px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 2.2rem;
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.07), 0 8px 18px rgba(0, 0, 0, 0.05);
+      padding: 2rem 1.8rem;
+      transition: all 0.2s ease;
+    }
+
+    h1 {
+      font-size: clamp(1.6rem, 5vw, 2.3rem);
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: #3c3a35;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.35rem;
+      line-height: 1.2;
+    }
+
+    h1 span {
+      background: #e8e2d4;
+      padding: 0.2rem 1rem;
+      border-radius: 3rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #4f4a40;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    .subtitle {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      margin: 0.8rem 0 1.8rem;
+      color: #5e584c;
+      font-weight: 500;
+      border-bottom: 2px dashed #d9d2c5;
+      padding-bottom: 1rem;
+    }
+
+    .date-range {
+      background: #f6f3ec;
+      padding: 0.35rem 1.3rem;
+      border-radius: 2rem;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .student-info {
+      font-size: 1rem;
+      background: #faf9f6;
+      padding: 0.5rem 1.2rem;
+      border-radius: 1.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.3rem;
+    }
+
+    .week-block {
+      margin-top: 2.3rem;
+    }
+
+    .week-title {
+      font-weight: 650;
+      font-size: 1.25rem;
+      background: #ece6db;
+      display: inline-block;
+      padding: 0.4rem 1.7rem;
+      border-radius: 2rem;
+      letter-spacing: 0.3px;
+      color: #3b362e;
+      margin-bottom: 0.9rem;
+    }
+
+    .day-entry {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.7rem 1.2rem;
+      padding: 0.8rem 0.5rem;
+      border-bottom: 1px solid #eee8db;
+      transition: background 0.15s;
+    }
+
+    .day-entry:last-child {
+      border-bottom: none;
+    }
+
+    .day-date {
+      font-weight: 700;
+      min-width: 140px;
+      font-size: 0.95rem;
+      color: #4b4236;
+      background: #f6f2e9;
+      padding: 0.25rem 0.8rem;
+      border-radius: 20px;
+      display: inline-block;
+      text-align: center;
+      letter-spacing: 0.2px;
+    }
+
+    .day-desc {
+      flex: 1;
+      font-size: 0.98rem;
+      line-height: 1.45;
+      color: #2f2c26;
+      word-break: break-word;
+    }
+
+    .rest-day {
+      opacity: 0.7;
+      font-style: italic;
+      background: #fcfaf5;
+      border-radius: 12px;
+      padding-left: 0.8rem;
+    }
+
+    .rest-day .day-date {
+      background: #ded9ce;
+      color: #4e4a40;
+      font-weight: 600;
+    }
+
+    .rest-day .day-desc {
+      color: #5c5549;
+      font-weight: 500;
+    }
+
+    /* отметка (пустая ячейка как в таблице) */
+    .mark-cell {
+      margin-left: auto;
+      font-size: 0.85rem;
+      color: #b9b09d;
+      background: #fdfdfb;
+      border: 1px solid #ddd6c6;
+      border-radius: 1.2rem;
+      padding: 0.15rem 1rem;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .footer-note {
+      margin-top: 2.8rem;
+      text-align: right;
+      font-size: 0.9rem;
+      color: #6b6356;
+      border-top: 2px solid #e1d9cc;
+      padding-top: 1.4rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stamp {
+      font-style: italic;
+      color: #8d8372;
+    }
+
+    /* адаптивность для телефонов */
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 0.7rem 0.4rem;
+      }
+
+      .diary-container {
+        padding: 1.3rem 0.9rem;
+        border-radius: 1.8rem;
+      }
+
+      .day-entry {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+        padding: 0.9rem 0.2rem;
+      }
+
+      .day-date {
+        width: fit-content;
+        min-width: unset;
+        font-size: 0.9rem;
+      }
+
+      .day-desc {
+        width: 100%;
+        font-size: 0.93rem;
+      }
+
+      .mark-cell {
+        margin-left: 0;
+        align-self: flex-end;
+        margin-top: 0.2rem;
+      }
+
+      .subtitle {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+      }
+
+      .student-info {
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+
+      .week-title {
+        font-size: 1.1rem;
+        padding: 0.3rem 1.2rem;
+      }
+    }
+
+    @media screen and (max-width: 380px) {
+      .diary-container {
+        padding: 1rem 0.6rem;
+      }
+
+      .day-date {
+        font-size: 0.8rem;
+        padding: 0.2rem 0.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="diary-container">
+    <h1>
+      📘 Дневник практики
+      <span>штукатур-маляр 2 разр.</span>
+    </h1>
+    <div class="subtitle">
+      <div class="date-range">📅 16 марта – 26 апреля 2026</div>
+      <div class="student-info">
+        <span>👤 ФИО обучающегося: __________________</span>
+        <span>🏗️ База практики: __________________</span>
+      </div>
+    </div>
+
+    <!-- Неделя 1 -->
+    <div class="week-block">
+      <div class="week-title">📌 Неделя 1 · 16.03 – 20.03</div>
+      <div class="day-entry">
+        <div class="day-date">16.03.2026 (Пн)</div>
+        <div class="day-desc">Вводный инструктаж. Ознакомление с объектом, правилами распорядка. Прохождение инструктажа по охране труда. Изучение техдокументации. Подготовка инвентаря (шпатели, кисти, тёрки).</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">17.03.2026 (Вт)</div>
+        <div class="day-desc">Подбор и дозирование компонентов сухих смесей. Очистка поверхностей от старой краски. Укрытие плёнкой столярных изделий и радиаторов.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">18.03.2026 (Ср)</div>
+        <div class="day-desc">Приготовление простого штукатурного раствора вручную. Нанесение обрызга и грунта на кирпичные стены ковшом. Разравнивание слоя.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">19.03.2026 (Чт)</div>
+        <div class="day-desc">Затирка оштукатуренной поверхности тёрками. Насечка бетонных поверхностей бучардой/зубилом для адгезии.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">20.03.2026 (Пт)</div>
+        <div class="day-desc">Разборка старой штукатурки. Подмазка выбоин и трещин известково-песчаным раствором. Расшивка трещин и грунтовка. Уборка места.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry rest-day">
+        <div class="day-date">22–23.03 (Сб–Вс)</div>
+        <div class="day-desc">Выходные дни</div>
+        <div class="mark-cell">—</div>
+      </div>
+    </div>
+
+    <!-- Неделя 2 -->
+    <div class="week-block">
+      <div class="week-title">📌 Неделя 2 · 23.03 – 27.03</div>
+      <div class="day-entry">
+        <div class="day-date">23.03.2026 (Пн)</div>
+        <div class="day-desc">Сплошное выравнивание стен гипсовой штукатуркой. Нанесение шпатлёвки шпателем. Установка/снятие маяков под контролем наставника.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">24.03.2026 (Вт)</div>
+        <div class="day-desc">Шлифовка прошпатлёванных стен абразивной сеткой. Обеспыливание. Приготовление клеевых составов (грунтовочные пасты).</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">25.03.2026 (Ср)</div>
+        <div class="day-desc">Грунтовка стен валиками и макловицами. Проклейка углов серпянкой. Подготовка колера водно-дисперсионной краски.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">26.03.2026 (Чт)</div>
+        <div class="day-desc">Первая сплошная окраска стен и потолков водно-дисперсионными составами (валик, кисть). Вытягивание филенок без подбора колера.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">27.03.2026 (Пт)</div>
+        <div class="day-desc">Финишный слой водоэмульсионной краски. Контроль покрытия. Окраска металлических труб и радиаторов. Промывка инструмента.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry rest-day">
+        <div class="day-date">29–30.03 (Сб–Вс)</div>
+        <div class="day-desc">Выходные дни</div>
+        <div class="mark-cell">—</div>
+      </div>
+    </div>
+
+    <!-- Неделя 3 -->
+    <div class="week-block">
+      <div class="week-title">📌 Неделя 3 · 30.03 – 03.04</div>
+      <div class="day-entry">
+        <div class="day-date">30.03.2026 (Пн)</div>
+        <div class="day-desc">Очистка дверных блоков и откосов. Проолифка поверхностей. Частичная подмазка щелей шпатлёвкой по дереву.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">31.03.2026 (Вт)</div>
+        <div class="day-desc">Шлифовка подмазанных мест. Первый слой масляной краски на двери и откосы. Промывка кистей в растворителе.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">01.04.2026 (Ср)</div>
+        <div class="day-desc">Финишный слой эмали на оконные блоки и двери. Лессировка (растушёвка) флейцевой кистью.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">02.04.2026 (Чт)</div>
+        <div class="day-desc">Очистка потолка от старого побелочного слоя (смывка). Перетирка штукатурки. Нанесение проникающей грунтовки.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">03.04.2026 (Пт)</div>
+        <div class="day-desc">Приготовление мелового состава. Простая побелка потолков кистями и краскопультом. Уборка брызг.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry rest-day">
+        <div class="day-date">05–06.04 (Сб–Вс)</div>
+        <div class="day-desc">Выходные дни</div>
+        <div class="mark-cell">—</div>
+      </div>
+    </div>
+
+    <!-- Неделя 4 -->
+    <div class="week-block">
+      <div class="week-title">📌 Неделя 4 · 06.04 – 10.04</div>
+      <div class="day-entry">
+        <div class="day-date">06.04.2026 (Пн)</div>
+        <div class="day-desc">Замеры и раскрой гипсокартонных листов. Приготовление клеевого состава для монтажа ГКЛ на стены.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">07.04.2026 (Вт)</div>
+        <div class="day-desc">Расшивка швов ГКЛ, грунтовка стыков. Заполнение швов шпаклёвкой с армированием серпянкой. Выравнивание саморезов.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">08.04.2026 (Ср)</div>
+        <div class="day-desc">Штукатурная отделка оконных и дверных откосов по маякам. Выведение угла рассвета, затирка и глянцевание.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">09.04.2026 (Чт)</div>
+        <div class="day-desc">Приготовление декоративной структурной краски. Нанесение «короед» кельмой и пластиковой тёркой, создание рисунка.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">10.04.2026 (Пт)</div>
+        <div class="day-desc">Грунтовка под структурную окраску. Окраска фактурной поверхности велюровым валиком в два слоя (база + лессирующий).</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry rest-day">
+        <div class="day-date">12–13.04 (Сб–Вс)</div>
+        <div class="day-desc">Выходные дни</div>
+        <div class="mark-cell">—</div>
+      </div>
+    </div>
+
+    <!-- Неделя 5 -->
+    <div class="week-block">
+      <div class="week-title">📌 Неделя 5 · 13.04 – 17.04</div>
+      <div class="day-entry">
+        <div class="day-date">13.04.2026 (Пн)</div>
+        <div class="day-desc">Очистка основания пола, обеспыливание. Грунтование бетонного пола. Приготовление цементно-песчаного раствора вручную.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">14.04.2026 (Вт)</div>
+        <div class="day-desc">Установка маяков для стяжки. Укладка и разравнивание цементной стяжки правилом. Затирка стальной гладилкой.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">15.04.2026 (Ср)</div>
+        <div class="day-desc">Финальная проверка геометрии стен. Мелкий ремонт дефектов (шпатлевание сколов на откосах). Обеспыливание пылесосом.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">16.04.2026 (Чт)</div>
+        <div class="day-desc">Грунтовка стеклохолста на потолке. Нанесение первого слоя интерьерной краски безвоздушным распылением (ассистент оператора).</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">17.04.2026 (Пт)</div>
+        <div class="day-desc">Окраска плинтусов и галтелей. Косметический ремонт по замечаниям прораба. Генеральная уборка секции. Сдача объекта бригадиру.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry rest-day">
+        <div class="day-date">19–20.04 (Сб–Вс)</div>
+        <div class="day-desc">Выходные дни</div>
+        <div class="mark-cell">—</div>
+      </div>
+    </div>
+
+    <!-- Неделя 6 -->
+    <div class="week-block">
+      <div class="week-title">📌 Неделя 6 · 20.04 – 26.04</div>
+      <div class="day-entry">
+        <div class="day-date">20.04.2026 (Пн)</div>
+        <div class="day-desc">Очистка фасадных стен от высолов и старой краски. Приготовление цементно-известкового раствора. Набрасывание штукатурного намёта на цоколь.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">21.04.2026 (Вт)</div>
+        <div class="day-desc">Разравнивание и затирка штукатурки наружных откосов. Накрывочный слой на фасад. Огрунтовка укрепляющей пропиткой.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">22.04.2026 (Ср)</div>
+        <div class="day-desc">Окраска цоколя резиновой краской. Работа кистью в труднодоступных местах, валиком на штанге. Меры безопасности с подмостей.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">23.04.2026 (Чт)</div>
+        <div class="day-desc">Приготовление сухих смесей в растворосмесителе. Транспортировка материалов. Сортировка отходов для утилизации.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">24.04.2026 (Пт)</div>
+        <div class="day-desc">Финальные малярные работы: подкраска фасадных элементов, инвентаризация инструмента. Заполнение журнала практики.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry">
+        <div class="day-date">25.04.2026 (Сб)</div>
+        <div class="day-desc day-desc">Завершающий день: сдача отчётной документации, получение характеристики от руководителя практики.</div>
+        <div class="mark-cell">✔️</div>
+      </div>
+      <div class="day-entry rest-day">
+        <div class="day-date">26.04.2026 (Вс)</div>
+        <div class="day-desc">Выходной (окончание периода практики)</div>
+        <div class="mark-cell">—</div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <div class="stamp">🧾 Дневник оформлен согласно ГОСТ 7.32 (учебная практика)</div>
+      <div>Подпись руководителя: ______________</div>
+    </div>
+  </div>
+</body>
+</html>
